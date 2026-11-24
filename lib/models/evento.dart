@@ -29,4 +29,24 @@ class Evento {
         return 'Local';
     }
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'titulo': titulo,
+    'descripcion': descripcion,
+    'inicio': inicio.toIso8601String(),
+    'fin': fin?.toIso8601String(),
+    'origen': origen.name,
+    'completado': completado,
+  };
+
+  factory Evento.fromJson(Map<String, dynamic> json) => Evento(
+    id: json['id'],
+    titulo: json['titulo'],
+    descripcion: json['descripcion'] ?? '',
+    inicio: DateTime.parse(json['inicio']),
+    fin: json['fin'] != null ? DateTime.parse(json['fin']) : null,
+    origen: OrigenCalendario.values.byName(json['origen']),
+    completado: json['completado'] ?? false,
+  );
 }

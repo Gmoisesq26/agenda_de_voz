@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
+import 'controllers/agenda_controller.dart';
 import 'widgets/home_shell.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('es_MX');
+  await agenda.cargar();
   runApp(const AgendaDeVozApp());
 }
 
