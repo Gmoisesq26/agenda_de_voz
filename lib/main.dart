@@ -3,11 +3,13 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'controllers/agenda_controller.dart';
 import 'widgets/home_shell.dart';
+import 'controllers/voz_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('es_MX');
   await agenda.cargar();
+  await voz.init();
   runApp(const AgendaDeVozApp());
 }
 
