@@ -46,7 +46,9 @@ class ActividadesScreen extends StatelessWidget {
         final e = eventos[i];
         return Dismissible(
           key: ValueKey(e.id),
-          direction: DismissDirection.endToStart,
+          direction: e.origen == OrigenCalendario.local
+              ? DismissDirection.endToStart
+              : DismissDirection.none,
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,

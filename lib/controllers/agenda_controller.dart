@@ -50,6 +50,28 @@ class AgendaController extends ChangeNotifier {
     await _repo.guardar(_eventos);
     notifyListeners();
   }
+
+  /// Reemplaza todos los eventos de un calendario externo conservando
+  /// el estado "completado" de los que ya existían (ese dato es solo local).
+  Future<void> reemplazarEventosDe(
+    OrigenCalendario origen,
+    List<Evento> nuevos,
+  ) async {
+    final previos = {
+      for (final e in _eventos.where((e) => e.origen == origen))
+        e.id: e.completado,
+    };
+
+    _eventos.removeWhere((e) => e.origen == origen);
+
+    for (final nuevo in nuevos) {
+      nuevo.completado = previos[nuevo.id] ?? false;
+      _eventos.add(nuevo);
+    }
+
+    await _repo.guardar(_eventos);
+    notifyListeners();
+  }
 }
 
 // Instancia global sencilla para el proyecto.
